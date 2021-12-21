@@ -1,0 +1,38 @@
+// Factions
+// 	Early Game
+// 		[x] CyberSec
+// 		[x] Tian Di Hui
+// 		[x] Netburners
+// 	City Factions
+// 		[x] Sector-12
+// 		[x] Chongquin
+// 		[x] New Tokyo
+// 		[x] Ishima
+// 		[x] Aevum
+// 		[x] Volhaven
+// 	Hackergroups
+// 		[x] NiteSec
+// 		[x] Black Hand
+// 		[x] BitRunners
+// 	Corps
+// 		[ ] MegaCorp
+// 		[ ] Blade Insdustries
+// 		[ ] Four Sigma
+// 		[ ] KuaiGong International
+// 		[ ] NWO
+// 		[ ] OmniTek
+// 		[ ] ECorp
+// 		[ ] Bachman
+// 		[ ] Clarke
+// 		[ ] Fulcrum Secret
+// 	Criminal Organization
+// 		[ ] Slum Snakes
+// 		[ ] Tetrads
+// 		[ ] Silhouette
+// 		[ ] Speakers for the Dead
+// 		[ ] Dark Army
+// 		[ ] Syndicate
+// 	Endgame
+// 		[ ] Covenant
+// 		[ ] Daedalus
+// 		[ ] Illuminati
