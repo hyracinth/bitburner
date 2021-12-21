@@ -16,7 +16,7 @@ export async function main(ns) {
 	await ns.scp(prepFile, homeServer, host);
 	await ns.scp(hackFile, homeServer, host);
 
-var serverLength = serverList.length;
+	var serverLength = serverList.length;
 	for (var ii = 0; ii < serverLength; ii++) {
 		var target = serverList[ii];
 		if (ns.getServerMaxMoney(target) > 0 && ns.getServerGrowth(target) > 0) {

@@ -1,8 +1,12 @@
+import { getServerList } from "/lib/utils.js";
+
 /** @param {NS} ns **/
 export async function main(ns) {
-    var target = ns.args[0];
+	var target = ns.args[0];
 
-	ns.tprint(`weakenAnalyze\t${ns.weakenAnalyze(1)}`);
-	ns.tprint(`hackAnalyzeSecurity\t${ns.hackAnalyzeSecurity(1)}`);
-	ns.tprint(`growthAnalyzeSecurity\t${ns.growthAnalyzeSecurity(1)}`);
+	var serverList = getServerList(ns, "home");
+
+	for (var ii = 0; ii < serverList.length; ii++) {
+		ns.exec("/utils/prepServer.js", "pserv_0", 1, "pserv_0", serverList[ii]);
+	}
 }

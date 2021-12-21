@@ -7,7 +7,7 @@ export async function main(ns) {
 
 	var host = ns.args[0];
 	var target = ns.args[1];
-	var baseOp = "/hack/baseOperations.js";
+	var baseOp = "/hackv2/baseOperations.js";
 
 	var baseOpRam = ns.getScriptRam(baseOp);
 	var availRam = ns.getServerMaxRam(host) - ns.getServerUsedRam(host);
@@ -15,8 +15,12 @@ export async function main(ns) {
 
 	// Grow money to maximum
 	var maxMoney = ns.getServerMaxMoney(target);
-	var reqMoney = maxMoney / ns.getServerMoneyAvailable(target);
-	if (reqMoney == 1) {
+	var reqMoney = maxMoney / Math.max(1, ns.getServerMoneyAvailable(target));
+
+	if (reqMoney == 0 || maxMoney == 0) {
+		ns.print(`${target} has 0 maximum money.`);
+	}
+	else if (reqMoney == 1) {
 		ns.print(`${target} is already at maximum money.`);
 	}
 	else {

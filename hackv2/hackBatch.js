@@ -11,8 +11,8 @@ export async function main(ns) {
 	var host = ns.args[0];
 	var target = ns.args[1];
 
-	var homeServer = "home";
-	var baseOpFile = "/hackv2/baseOperations.js";
+	const homeServer = "home";
+	const baseOpFile = "/hackv2/baseOperations.js";
 	await ns.scp(baseOpFile, homeServer, host);
 	
 	var maxMoney = ns.getServerMaxMoney(target);
