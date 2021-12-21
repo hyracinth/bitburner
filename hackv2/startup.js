@@ -1,20 +1,36 @@
+import { getServerList } from "/lib/utils.js";
+
 /** @param {NS} ns **/
 export async function main(ns) {
 	var host = ns.args[0];
-	var target = ns.args[1];
 
-	if (host != "home") {
-		var prepFile = "/hack/prepServer.js";
-		var hackFile = "/hack/hackBundle.js";
-	}
-	
-	await ns.scp(prepFile, "home", host);
-	await ns.scp(hackFile, "home", host);
+	const homeServer = "home";
 
-	var pid = ns.exec(prepFile, host, 1, host, target);
-	while (ns.isRunning(pid)) {
-		await ns.sleep(5000);
+	if (host != homeServer) {
+		var prepFile = "/utils/prepServer.js";
+		var hackFile = "/hackv2/hackBatch.js";
 	}
 
-	ns.exec(hackFile, host, 1, host, target);
+	var serverList = getServerList(ns, homeServer);
+
+	await ns.scp(prepFile, homeServer, host);
+	await ns.scp(hackFile, homeServer, host);
+
+var serverLength = serverList.length;
+	for (var ii = 0; ii < serverLength; ii++) {
+		var target = serverList[ii];
+		if (ns.getServerMaxMoney(target) > 0 && ns.getServerGrowth(target) > 0) {
+			ns.print(`Prepping ${target} with ${host}. ${ii}/${serverLength}`);
+			var pid = ns.exec(prepFile, host, 1, host, target);
+			while (ns.isRunning(pid)) {
+				await ns.sleep(5000);
+			}
+			ns.print(`Hacking ${target} with ${host}.`);
+			ns.exec(hackFile, host, 1, host, target);
+		}
+	}
+
+	while (true) {
+		await ns.sleep(10000);
+	}
 }

@@ -17,17 +17,17 @@ export async function main(ns) {
 	var maxMoney = ns.getServerMaxMoney(target);
 	var reqMoney = maxMoney / ns.getServerMoneyAvailable(target);
 	if (reqMoney == 1) {
-		ns.tprint(`${target} is already at maximum money.`);
+		ns.print(`${target} is already at maximum money.`);
 	}
 	else {
-		ns.tprint(`Prepping to grow ${target} with ${host}.`);
+		ns.print(`Prepping to grow ${target} with ${host}.`);
 		while (reqMoney != 1) {
 			var threadsToMaxMoney = Math.ceil(ns.growthAnalyze(target, reqMoney));
 			var threadsToUse = Math.min(threadsToMaxMoney, Math.floor(availRam / baseOpRam));
 			var pid = ns.exec(baseOp, host, threadsToUse, target, "GROW", 0);
 
 			var timeToSleep = ns.getGrowTime(target) + 100;
-			ns.tprint(`Growing ${target}: ${threadsToUse} / ${threadsToMaxMoney} threads. ETA: ${Math.round(timeToSleep / 1000)} secs`);
+			ns.print(`Growing ${target}: ${threadsToUse} / ${threadsToMaxMoney} threads. ETA: ${Math.round(timeToSleep / 1000)} secs`);
 			await ns.sleep(timeToSleep);
 			while (ns.isRunning(pid)) {
 				await ns.sleep(1000);
@@ -36,24 +36,24 @@ export async function main(ns) {
 			var currMoney = ns.getServerMoneyAvailable(target);
 			reqMoney = maxMoney / currMoney;
 		}
-		ns.tprint(`${target} Current Money: ${currMoney / 1000000}M | Max Money: ${maxMoney / 1000000}M`);
+		ns.print(`${target} Current Money: ${currMoney / 1000000}M | Max Money: ${maxMoney / 1000000}M`);
 	}
 
 	var currSec = ns.getServerSecurityLevel(target);
 	var minSec = ns.getServerMinSecurityLevel(target);
 	// Lower security level to minimum
 	if (currSec <= minSec) {
-		ns.tprint(`${target} is already at minimum security.`);
+		ns.print(`${target} is already at minimum security.`);
 	}
 	else {
-		ns.tprint(`Prepping to weaken ${target} with ${host}.`);
+		ns.print(`Prepping to weaken ${target} with ${host}.`);
 		while (currSec > minSec) {
 			var threadsToMinSec = Math.ceil((currSec - minSec) / weakAnalyze);
 			var threadsToUse = Math.min(threadsToMinSec, Math.floor(availRam / baseOpRam));
 			var pid = ns.exec(baseOp, host, threadsToUse, target, "WEAK", 0);
 
 			var timeToSleep = ns.getWeakenTime(target) + 100;
-			ns.tprint(`Weakening ${target}: ${threadsToUse} / ${threadsToMinSec} threads. ETA: ${Math.round(timeToSleep / 1000)} secs`);
+			ns.print(`Weakening ${target}: ${threadsToUse} / ${threadsToMinSec} threads. ETA: ${Math.round(timeToSleep / 1000)} secs`);
 			await ns.sleep(timeToSleep);
 			while (ns.isRunning(pid)) {
 				await ns.sleep(1000);
@@ -62,7 +62,7 @@ export async function main(ns) {
 			currSec = ns.getServerSecurityLevel(target);
 			availRam = ns.getServerMaxRam(host) - ns.getServerUsedRam(host);
 		}
-		ns.tprint(`${target} Security Level: ${currSec} | Min Level: ${minSec}.`);
+		ns.print(`${target} Security Level: ${currSec} | Min Level: ${minSec}.`);
 	}
 
 }
