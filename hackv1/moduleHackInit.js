@@ -1,5 +1,9 @@
 /** @param {NS} ns **/
 export async function main(ns) {
+	if(ns.args.length < 2) {
+		ns.print("Usage: moduleHackInit.js HOST TARGET");
+		return;
+	}
 	var host = ns.args[0];
 	var target = ns.args[1];
 	var moneyThres = ns.getServerMaxMoney(target) * 0.75;
@@ -10,9 +14,9 @@ export async function main(ns) {
 		hostRam -= 20;
 	}
 
-	var weakenScript = "moduleWeaken.js";
-	var growScript = "moduleGrow.js";
-	var hackScript = "moduleHack.js";
+	var weakenScript = "/hackv1/moduleWeaken.js";
+	var growScript = "/hackv1/moduleGrow.js";
+	var hackScript = "/hackv1/moduleHack.js";
 
 	var scriptRam;
 	var pidCheck;

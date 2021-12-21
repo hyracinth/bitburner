@@ -3,7 +3,6 @@ export async function main(ns) {
 	ns.disableLog("ALL");
 	ns.enableLog("exec");
 
-
 	var maxRam = ns.getPurchasedServerMaxRam();
 	var maxCost = ns.getPurchasedServerCost(ns.getPurchasedServerMaxRam());
 	ns.tprint(ns.nFormat(maxRam, '0.000b'));
