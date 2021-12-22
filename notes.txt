@@ -18,7 +18,7 @@
 // 		[ ] MegaCorp
 // 		[ ] Blade Insdustries
 // 		[ ] Four Sigma
-// 		[ ] KuaiGong International
+// 		[x] KuaiGong International
 // 		[ ] NWO
 // 		[ ] OmniTek
 // 		[ ] ECorp

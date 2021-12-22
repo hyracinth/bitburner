@@ -7,7 +7,7 @@ export async function main(ns) {
 
 	var host = ns.args[0];
 	var target = ns.args[1];
-	var baseOp = "/hackv2/baseOperations.js";
+	var baseOp = "/common/baseOperations.js";
 
 	var baseOpRam = ns.getScriptRam(baseOp);
 	var availRam = ns.getServerMaxRam(host) - ns.getServerUsedRam(host);
