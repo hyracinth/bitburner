@@ -9,7 +9,7 @@ export async function main(ns) {
 	}
 
 	const homeServer = "home";
-	const baseOpFile = "/hackv2/baseOperations.js";
+	const baseOpFile = "/common/baseOperations.js";
 	await ns.scp(baseOpFile, homeServer, host);
 
 	var host = ns.args[0];

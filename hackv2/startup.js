@@ -7,7 +7,7 @@ export async function main(ns) {
 
 	var prepHost = (ns.args[0] == null) ? "pserv_0" : ns.args[0];
 	var hackHost = (ns.args[1] == null) ? "pserv_1" : ns.args[1];
-	var serversToHack = (ns.args[2] == null) ? 20 : ns.args[2];
+	var serversToHack = (ns.args[2] == null) ? 5 : ns.args[2];
 
 	const homeServer = "home";
 
@@ -22,10 +22,11 @@ export async function main(ns) {
 
 	for (var ii = 0; ii < serverLength; ii++) {
 		var target = serverList[ii];
-		if (ns.getServerMaxMoney(target) > 0
-			&& ns.getServerGrowth(target) > 0
-			&& ns.getServerRequiredHackingLevel(target) <= ns.getHackingLevel()) {
-			filteredServers.push([serverList[ii], ns.getServerMaxMoney(serverList[ii]) / ns.getWeakenTime(serverList[ii])]);
+		if (ns.getServerMaxMoney(target) > 0 &&
+			ns.getServerGrowth(target) > 0 &&
+			ns.getServerRequiredHackingLevel(target) <= ns.getHackingLevel() &&
+			ns.getWeakenTime(target) > (2 * 60)) {
+			filteredServers.push([target, ns.getServerMaxMoney(target) / ns.getWeakenTime(target) * ns.hackAnalyzeChance(target)]);
 		}
 	}
 
@@ -33,7 +34,7 @@ export async function main(ns) {
 		return y[1] - x[1];
 	});
 
-	ns.print(filteredServers);
+	ns.tprint(filteredServers);
 
 	for (var ii = 0; ii < serversToHack; ii++) {
 		var target = filteredServers[ii][0];

@@ -11,9 +11,6 @@ export async function main(ns) {
 	// Initial variables
 	var homeServer = "home";
 	var hackInitFile = "moduleHackInit.js";
-	var weakenScript = "moduleWeaken.js";
-	var growScript = "moduleGrow.js";
-	var hackScript = "moduleHack.js";
 	var portsOpened = 0;
 	var programList = ["BruteSSH.exe", "FTPCrack.exe", "relaySMTP.exe", "HTTPworm.exe", "SQLInject.exe"];
 	programList.forEach(x => {
@@ -58,10 +55,6 @@ export async function main(ns) {
 		}
 
 		if (ns.getServerMaxRam(serv) >= 4) {
-			await ns.scp(weakenScript, serv);
-			await ns.scp(growScript, serv);
-			await ns.scp(hackScript, serv);
-
 			// Run all control scripts at home PC
 			ns.killall(serv);
 			ns.exec(hackInitFile, homeServer, 1, serv, target);

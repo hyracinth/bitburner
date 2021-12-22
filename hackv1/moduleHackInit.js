@@ -14,9 +14,9 @@ export async function main(ns) {
 		hostRam -= 20;
 	}
 
-	var weakenScript = "/hackv1/moduleWeaken.js";
-	var growScript = "/hackv1/moduleGrow.js";
-	var hackScript = "/hackv1/moduleHack.js";
+	var weakenScript = "/common/moduleWeaken.js";
+	var growScript = "/common/moduleGrow.js";
+	var hackScript = "/common/moduleHack.js";
 
 	var scriptRam;
 	var pidCheck;
