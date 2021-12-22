@@ -2,32 +2,44 @@ import { getServerList } from "/lib/utils.js";
 
 /** @param {NS} ns **/
 export async function main(ns) {
-	var host = ns.args[0];
+	ns.disableLog("ALL");
+	ns.enableLog("exec");
+
+	var prepHost = (ns.args[0] == null) ? "pserv_0" : ns.args[0];
+	var hackHost = (ns.args[1] == null) ? "pserv_1" : ns.args[1];
+	var serversToHack = (ns.args[2] == null) ? 20 : ns.args[2];
 
 	const homeServer = "home";
 
-	if (host != homeServer) {
-		var prepFile = "/utils/prepServer.js";
+	if (hackHost != homeServer) {
 		var hackFile = "/hackv2/hackBatch.js";
+		await ns.scp(hackFile, homeServer, hackHost);
 	}
 
 	var serverList = getServerList(ns, homeServer);
-
-	await ns.scp(prepFile, homeServer, host);
-	await ns.scp(hackFile, homeServer, host);
-
 	var serverLength = serverList.length;
+	var filteredServers = [];
+
 	for (var ii = 0; ii < serverLength; ii++) {
 		var target = serverList[ii];
-		if (ns.getServerMaxMoney(target) > 0 && ns.getServerGrowth(target) > 0) {
-			ns.print(`Prepping ${target} with ${host}. ${ii}/${serverLength}`);
-			var pid = ns.exec(prepFile, host, 1, host, target);
-			while (ns.isRunning(pid)) {
-				await ns.sleep(5000);
-			}
-			ns.print(`Hacking ${target} with ${host}.`);
-			ns.exec(hackFile, host, 1, host, target);
+		if (ns.getServerMaxMoney(target) > 0
+			&& ns.getServerGrowth(target) > 0
+			&& ns.getServerRequiredHackingLevel(target) <= ns.getHackingLevel()) {
+			filteredServers.push([serverList[ii], ns.getServerMaxMoney(serverList[ii]) / ns.getWeakenTime(serverList[ii])]);
 		}
+	}
+
+	filteredServers.sort(function (x, y) {
+		return y[1] - x[1];
+	});
+
+	ns.print(filteredServers);
+
+	for (var ii = 0; ii < serversToHack; ii++) {
+		var target = filteredServers[ii][0];
+		ns.print(`Hacking ${target} with ${hackHost}. ${ii}/${filteredServers.length}`);
+		ns.exec(hackFile, prepHost, 1, hackHost, target, prepHost, Date.now());
+		await ns.sleep(100);
 	}
 
 	while (true) {

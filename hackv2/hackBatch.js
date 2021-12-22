@@ -3,18 +3,28 @@ export async function main(ns) {
 	ns.disableLog("ALL");
 	ns.enableLog("exec");
 
-	if(ns.args.length < 2) {
+	if (ns.args.length < 2) {
 		ns.tprint("Usage: hackBatch.js HOST TARGET");
 		return;
 	}
 
-	var host = ns.args[0];
-	var target = ns.args[1];
-
 	const homeServer = "home";
 	const baseOpFile = "/hackv2/baseOperations.js";
 	await ns.scp(baseOpFile, homeServer, host);
-	
+
+	var host = ns.args[0];
+	var target = ns.args[1];
+	var prepHost = ns.args[2];
+
+	if (prepHost != null) {
+		const prepFile = "/utils/prepServer.js";
+		await ns.scp(prepFile, homeServer, prepHost);
+		var pid = ns.exec(prepFile, prepHost, 1, prepHost, target, Date.now());
+		while (ns.isRunning(pid)) {
+			await ns.sleep(5000);
+		}
+	}
+
 	var maxMoney = ns.getServerMaxMoney(target);
 	var currMoney = maxMoney - maxMoney * ns.hackAnalyze(target);
 
