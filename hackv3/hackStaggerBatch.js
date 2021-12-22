@@ -81,6 +81,6 @@ export async function main(ns) {
 		}
 		// Wait for 
 		await ns.sleep(100);
-		ns.print(`${ns.nFormat(ns.getServerMoneyAvailable(target), "($0.00 a)")}/${ns.nFormat(ns.getServerMaxMoney(target), "($0.00 a)")} | ${ns.getServerSecurityLevel(target)}/${ns.getServerMinSecurityLevel(target)}`);
+		ns.print(`${Date.now()}${ns.nFormat(ns.getServerMoneyAvailable(target), "($0.00 a)")}/${ns.nFormat(ns.getServerMaxMoney(target), "($0.00 a)")} | ${ns.getServerSecurityLevel(target)}/${ns.getServerMinSecurityLevel(target)}`);
 	}
 }
