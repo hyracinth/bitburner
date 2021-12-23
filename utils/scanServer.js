@@ -1,6 +1,6 @@
 /** @param {NS} ns **/
 export async function main(ns) {
-    var target = ns.args[0];
+    let target = ns.args[0];
 	ns.tprint(target);
 	ns.tprint("Hack Level: " + ns.getServerRequiredHackingLevel(target));
 	ns.tprint("Ports Required: " + ns.getServerNumPortsRequired(target));

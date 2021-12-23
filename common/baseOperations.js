@@ -1,10 +1,10 @@
 /** @param {NS} ns **/
 export async function main(ns) {
-    var target = ns.args[0];
-    var func = ns.args[1];
-    var time = ns.args[2];
+    let target = ns.args[0];
+    let func = ns.args[1];
+    let time = (ns.args[2] == null) ? 0 : ns.args[2];
 
-    switch(func) {
+    switch (func) {
         case "HACK":
             await ns.sleep(time);
             await ns.hack(target);
@@ -17,5 +17,5 @@ export async function main(ns) {
             await ns.sleep(time);
             await ns.weaken(target);
             break;
-    }    
+    }
 }

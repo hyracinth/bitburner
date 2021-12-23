@@ -1,21 +1,21 @@
+import HBBConstants from "/lib/HBBConstants.js";
+
 /** @param {NS} ns **/
 export async function main(ns) {
 	ns.disableLog("ALL");
 	ns.enableLog("exec");
-	var op = (ns.args[0] == null) ? "WEAK" : ns.args[0];
-	var host = (ns.args[1] == null) ? "iron-gym" : ns.args[1];
-	var target = (ns.args[2] == null) ? "foodnstuff" : ns.args[2];
+	let op = (ns.args[0] == null) ? "WEAK" : ns.args[0];
+	let host = (ns.args[1] == null) ? "iron-gym" : ns.args[1];
+	let target = (ns.args[2] == null) ? "foodnstuff" : ns.args[2];
 
-	var weakFile = "/common/moduleWeaken.js";
-	var growFile = "/common/moduleGrow.js"
-	var opFile = weakFile;
+	let opFile;
 
 	switch (op) {
 		case "WEAK":
-			opFile = weakFile;
+			opFile = HBBConstants.SCRIPT_MODULE_WEAKEN;
 			break;
 		case "GROW":
-			opFile = growFile;
+			opFile = HBBConstants.SCRIPT_MODULE_GROW;
 			break;
 	}
 
@@ -24,8 +24,8 @@ export async function main(ns) {
 	}
 
 	while (true) {
-		var waitTime = ns.getWeakenTime(target);
-		var threads = Math.floor((ns.getServerMaxRam(host) - ns.getServerUsedRam(host)) / ns.getScriptRam(opFile));
+		let waitTime = ns.getWeakenTime(target);
+		let threads = Math.floor((ns.getServerMaxRam(host) - ns.getServerUsedRam(host)) / ns.getScriptRam(opFile));
 		if (threads > 0) {
 			ns.exec(opFile, host, threads, target);
 		}

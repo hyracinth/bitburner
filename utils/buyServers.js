@@ -3,8 +3,8 @@ export async function main(ns) {
 	ns.disableLog("ALL");
 	ns.enableLog("exec");
 
-	var ram = ns.getPurchasedServerMaxRam();
-	var purchServCount = ns.getPurchasedServers().length;
+	let ram = ns.getPurchasedServerMaxRam();
+	let purchServCount = ns.getPurchasedServers().length;
 
 	if (purchServCount == ns.getPurchasedServerLimit()) {
 		ns.tprint("Cannot purchase any more servers.");

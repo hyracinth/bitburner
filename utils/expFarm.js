@@ -1,11 +1,12 @@
 /** @param {NS} ns **/
 export async function main(ns) {
-	var host = (ns.args[0] == null) ? "home" : ns.args[0];
-	var target = (ns.args[1] == null) ? "joesguns" : ns.args[1];
-	var threads = ns.args[2];
-	var targetHackLvl = (ns.args[3] == null) ? 3000 : ns.args[3];
-
-	var baseOp = "/common/baseOperations.js";
+	ns.disableLog("ALL");
+	ns.enableLog("exec");
+	let host = (ns.args[0] == null) ? "home" : ns.args[0];
+	let target = (ns.args[1] == null) ? "joesguns" : ns.args[1];
+	let threads = ns.args[2];
+	let targetHackLvl = (ns.args[3] == null) ? 3000 : ns.args[3];
+	let baseOp = "/common/baseOperations.js";
 
 	if (host != "home") {
 		await ns.scp(baseOp, "home", host);
@@ -13,12 +14,18 @@ export async function main(ns) {
 
 	while (ns.getHackingLevel() < targetHackLvl) {
 		if (threads == null) {
-			threads = (ns.getServerMaxRam(host) - ns.getServerUsedRam(host)) / ns.getScriptRam(baseOp);
+			let bufferRam = 0;
+			if(host == "home") {
+				bufferRam = 5;
+			}
+			threads = (ns.getServerMaxRam(host) - ns.getServerUsedRam(host) - bufferRam) / ns.getScriptRam(baseOp);
 		}
-		var waitTime = ns.getWeakenTime(target);
-		var pid = ns.exec(baseOp, host, threads, target, "WEAK", 0);
-		// while (ns.isRunning(pid)) {
+		threads = Math.floor(threads);
+		let waitTime = ns.getWeakenTime(target);
+		let pid = ns.exec(baseOp, host, threads, target, "WEAK", 0);
 		await ns.sleep(waitTime);
-		// }
+		if (ns.isRunning(pid)) {
+			await ns.sleep(3000);
+		}
 	}
 }

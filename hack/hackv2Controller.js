@@ -1,3 +1,4 @@
+import HBBConstants from "/lib/HBBConstants.js";
 import { getServerList } from "/lib/utils.js";
 
 /** @param {NS} ns **/
@@ -5,23 +6,22 @@ export async function main(ns) {
 	ns.disableLog("ALL");
 	ns.enableLog("exec");
 
-	var prepHost = (ns.args[0] == null) ? "pserv_0" : ns.args[0];
-	var hackHost = (ns.args[1] == null) ? "pserv_1" : ns.args[1];
-	var serversToHack = (ns.args[2] == null) ? 5 : ns.args[2];
+	let prepHost = (ns.args[0] == null) ? "pserv_0" : ns.args[0];
+	let hackHost = (ns.args[1] == null) ? "pserv_1" : ns.args[1];
+	let serversToHack = (ns.args[2] == null) ? 5 : ns.args[2];
 
-	const homeServer = "home";
+	const homeServer = HBBConstants.CONST_HOME;
 
 	if (hackHost != homeServer) {
-		var hackFile = "/hackv2/hackBatch.js";
-		await ns.scp(hackFile, homeServer, hackHost);
+		await ns.scp(HBBConstants.SCRIPT_HACKV2, homeServer, hackHost);
 	}
 
-	var serverList = getServerList(ns, homeServer);
-	var serverLength = serverList.length;
-	var filteredServers = [];
+	let serverList = getServerList(ns, homeServer);
+	let serverLength = serverList.length;
+	let filteredServers = [];
 
-	for (var ii = 0; ii < serverLength; ii++) {
-		var target = serverList[ii];
+	for (let ii = 0; ii < serverLength; ii++) {
+		let target = serverList[ii];
 		if (ns.getServerMaxMoney(target) > 0 &&
 			ns.getServerGrowth(target) > 0 &&
 			ns.getServerRequiredHackingLevel(target) <= ns.getHackingLevel() &&
@@ -36,10 +36,10 @@ export async function main(ns) {
 
 	ns.tprint(filteredServers);
 
-	for (var ii = 0; ii < serversToHack; ii++) {
-		var target = filteredServers[ii][0];
+	for (let ii = 0; ii < serversToHack; ii++) {
+		let target = filteredServers[ii][0];
 		ns.print(`Hacking ${target} with ${hackHost}. ${ii}/${filteredServers.length}`);
-		ns.exec(hackFile, prepHost, 1, hackHost, target, prepHost, Date.now());
+		ns.exec(HBBConstants.SCRIPT_HACKV2, prepHost, 1, hackHost, target, prepHost, Date.now());
 		await ns.sleep(100);
 	}
 

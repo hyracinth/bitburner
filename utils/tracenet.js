@@ -1,24 +1,29 @@
 /** @param {NS} ns **/
 export async function main(ns) {
-	// var target = "run4theh111z";
-	var target = ns.args[0];
+	if (ns.args.length < 1) {
+		ns.tprint("Usage: tracenet.js TARGET ?CONNECT");
+		return;
+	}
 
-	var visited = [];
-	var stack = [];
-	var parentList = [];
-	var start = "home";
+	let target = ns.args[0];
+	let connectPath = (ns.args[1] == null) ? true : false;
+
+	let visited = [];
+	let stack = [];
+	let parentList = [];
+	let start = "home";
 	stack.push(start);
 
-	var counter = 0;
-	var failSafeIterations = 10000;
+	let counter = 0;
+	let failSafeIterations = 10000;
 
 	while (stack.length > 0) {
-		var currentServ = stack.pop();
+		let currentServ = stack.pop();
 
 		if (!visited.includes(currentServ)) {
 			visited.push(currentServ);
-			var childServs = ns.scan(currentServ);
-			for (var ii = 0; ii < childServs.length; ii++) {
+			let childServs = ns.scan(currentServ);
+			for (let ii = 0; ii < childServs.length; ii++) {
 				if (childServs[ii] == target) {
 					parentList.push([currentServ, childServs[ii]]);
 					stack = [];
@@ -35,9 +40,8 @@ export async function main(ns) {
 		}
 	}
 
-	var path = [];
-	var iterator = target;
-	var jj = 0;
+	let path = [];
+	let iterator = target;
 	while (iterator != start) {
 		path.push(iterator);
 		for (var ii = 0; ii < parentList.length; ii++) {
@@ -48,5 +52,15 @@ export async function main(ns) {
 		}
 	}
 
-	ns.tprint(path.reverse());
+	if (connectPath) {
+		let revPath = path.reverse();
+		let result = "connect ";
+		for(let ii = 0; ii < revPath.length; ii++) {
+			result += revPath[ii] + "; connect ";
+		}
+		ns.tprint(result.substring(0, result.length - 9));
+	}
+	else {
+		ns.tprint(path.reverse());
+	}
 }

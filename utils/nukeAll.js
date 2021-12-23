@@ -4,17 +4,17 @@ import { getServerList } from "/lib/utils.js"
 export async function main(ns) {
 	const programList = ["BruteSSH.exe", "FTPCrack.exe", "relaySMTP.exe", "HTTPworm.exe", "SQLInject.exe"];
 	const homeServer = "home";
-	var portsOpened = 0;
+	let portsOpened = 0;
 	programList.forEach(x => {
 		if (ns.fileExists(x, homeServer)) {
 			portsOpened++;
 		}
 	});
 
-	var serverList = getServerList(ns, homeServer);
+	let serverList = getServerList(ns, homeServer);
 
-	for (var ii = 0; ii < serverList.length; ii++) {
-		var serv = serverList[ii];
+	for (let ii = 0; ii < serverList.length; ii++) {
+		let serv = serverList[ii];
 		if (ns.getServerRequiredHackingLevel(serv) <= ns.getHackingLevel() &&
 			ns.getServerNumPortsRequired(serv) <= portsOpened) {
 			// Purchased servers do not need hacking
