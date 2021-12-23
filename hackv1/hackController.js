@@ -10,7 +10,7 @@ export async function main(ns) {
 
 	// Initial variables
 	var homeServer = "home";
-	var hackInitFile = "moduleHackInit.js";
+	var hackInitFile = "/hackv1/moduleHackInit.js";
 	var portsOpened = 0;
 	var programList = ["BruteSSH.exe", "FTPCrack.exe", "relaySMTP.exe", "HTTPworm.exe", "SQLInject.exe"];
 	programList.forEach(x => {

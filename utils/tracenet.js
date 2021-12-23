@@ -9,6 +9,9 @@ export async function main(ns) {
 	var start = "home";
 	stack.push(start);
 
+	var counter = 0;
+	var failSafeIterations = 10000;
+
 	while (stack.length > 0) {
 		var currentServ = stack.pop();
 
@@ -26,6 +29,9 @@ export async function main(ns) {
 					parentList.push([currentServ, childServs[ii]]);
 				}
 			}
+		}
+		if (counter++ > failSafeIterations) {
+			break;
 		}
 	}
 

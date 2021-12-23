@@ -14,8 +14,8 @@ export async function main(ns) {
 	while (purchServCount <= ns.getPurchasedServerLimit()) {
 		if (ns.getServerMoneyAvailable("home") > ns.getPurchasedServerCost(ram)) {
 			ns.purchaseServer("pserv_" + purchServCount++, ram);
+			ns.tprint("Server bought");
 		}
-		await ns.sleep(60000);
 		break;
 	}
 }

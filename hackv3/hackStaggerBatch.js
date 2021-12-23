@@ -64,12 +64,18 @@ export async function main(ns) {
 	// g  = t + 1*bufferEnd - gTime
 	// h  = t - 1*bufferEnd - hTime
 
-	var bufferTime = 10;
+	var bufTimeThread = 10;
 	var t = ns.getWeakenTime(target);
 	var delayW1 = 0;
-	var delayW2 = 2 * bufferTime;
-	var delayG = t + bufferTime - ns.getGrowTime(target);
-	var delayH = t - bufferTime - ns.getHackTime(target);
+	var delayW2 = 2 * bufTimeThread;
+	var delayG = t + bufTimeThread - ns.getGrowTime(target);
+	var delayH = t - bufTimeThread - ns.getHackTime(target);
+
+	var bufTimeBatch = 100;
+	var threadCount = 3000;
+	if(t / bufTimeBatch * (hackThreads + growThreads + weakThreads) > threadCount) {
+		bufTimeBatch = Math.floor(t / threadCount);
+	}
 
 	while (true) {
 		var hostRemainingRam = ns.getServerMaxRam(hostHack) - ns.getServerUsedRam(hostHack);
@@ -80,7 +86,7 @@ export async function main(ns) {
 			ns.exec(baseOpFile, hostHack, hackThreads, target, "HACK", delayH, Date.now());
 		}
 		// Wait for 
-		await ns.sleep(100);
-		ns.print(`${Date.now()}${ns.nFormat(ns.getServerMoneyAvailable(target), "($0.00 a)")}/${ns.nFormat(ns.getServerMaxMoney(target), "($0.00 a)")} | ${ns.getServerSecurityLevel(target)}/${ns.getServerMinSecurityLevel(target)}`);
+		await ns.sleep(bufTimeBatch);
+		ns.print(`${Date.now()}: ${bufTimeBatch} | ${ns.nFormat(ns.getServerMoneyAvailable(target), "($0.00 a)")}/${ns.nFormat(ns.getServerMaxMoney(target), "($0.00 a)")} | ${ns.getServerSecurityLevel(target)}/${ns.getServerMinSecurityLevel(target)}`);
 	}
 }

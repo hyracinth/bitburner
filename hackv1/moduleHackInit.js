@@ -1,6 +1,9 @@
 /** @param {NS} ns **/
 export async function main(ns) {
-	if(ns.args.length < 2) {
+	ns.disableLog("ALL");
+	ns.enableLog("exec");
+
+	if (ns.args.length < 2) {
 		ns.print("Usage: moduleHackInit.js HOST TARGET");
 		return;
 	}
@@ -17,6 +20,10 @@ export async function main(ns) {
 	var weakenScript = "/common/moduleWeaken.js";
 	var growScript = "/common/moduleGrow.js";
 	var hackScript = "/common/moduleHack.js";
+
+	await ns.scp(weakenScript, "home", host);
+	await ns.scp(growScript, "home", host);
+	await ns.scp(hackScript, "home", host);
 
 	var scriptRam;
 	var pidCheck;

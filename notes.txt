@@ -22,7 +22,7 @@
 // 		[ ] NWO
 // 		[ ] OmniTek
 // 		[ ] ECorp
-// 		[ ] Bachman
+// 		[x] Bachman
 // 		[ ] Clarke
 // 		[ ] Fulcrum Secret
 // 	Criminal Organization
