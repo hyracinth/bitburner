@@ -1,24 +1,28 @@
 /** @param {NS} ns **/
 export async function main(ns) {
 	const crimeList = [
-		"shoplift",
-		"rob store",
-		"mug someone",
-		"larceny",
-		"deal drugs",
-		"bond forgery",
+		"shoplift",		//1
+		"rob store",	//2
+		"mug someone",	//3
+		"larceny",		//4
+		"deal drugs", 	//5
+		"bond forgery",	//6
 		"traffick illegal arms",
-		"homicide",
-		"grand theft auto",
-		"kidnap and ransom",
-		"assassinate",
-		"heist"
+		"homicide",		//8
+		"grand theft auto",	//9
+		"kidnap and ransom",	//10
+		"assassinate",	//11
+		"heist"			//12
 	];
 
 	while (true) {
+		const time = ns.commitCrime(crimeList[4])
+		await ns.sleep(time * 0.9);
 		if (!ns.isBusy()) {
-			ns.commitCrime(crimeList[4]);
+			break;
 		}
-		await ns.sleep(10000);
+		while (ns.isBusy()) {
+			await ns.sleep(50);
+		}
 	}
 }

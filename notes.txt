@@ -1,38 +1,11 @@
-// Factions
-// 	Early Game
-// 		[x] CyberSec
-// 		[x] Tian Di Hui
-// 		[x] Netburners
-// 	City Factions
-// 		[x] Sector-12
-// 		[x] Chongquin
-// 		[x] New Tokyo
-// 		[x] Ishima
-// 		[x] Aevum
-// 		[x] Volhaven
-// 	Hackergroups
-// 		[x] NiteSec
-// 		[x] Black Hand
-// 		[x] BitRunners
-// 	Corps
-// 		[ ] MegaCorp
-// 		[ ] Blade Insdustries
-// 		[ ] Four Sigma
-// 		[x] KuaiGong International
-// 		[ ] NWO
-// 		[ ] OmniTek
-// 		[ ] ECorp
-// 		[x] Bachman
-// 		[ ] Clarke
-// 		[ ] Fulcrum Secret
-// 	Criminal Organization
-// 		[ ] Slum Snakes
-// 		[ ] Tetrads
-// 		[ ] Silhouette
-// 		[ ] Speakers for the Dead
-// 		[ ] Dark Army
-// 		[ ] Syndicate
-// 	Endgame
-// 		[ ] Covenant
-// 		[ ] Daedalus
-// 		[ ] Illuminati
+alias findCSEC="run utilsTracenet.js CSEC;";
+alias findNiteSec="run utilsTracenet.js avmnite-02h;";
+alias findBitRunners="run utilsTracenet.js run4theh111z;";
+alias findBlackHand="run utilsTracenet.js I.I.I.I;";
+alias findWorldDaemon="run utilsTracenet.js w0r1d_d43m0n;";
+
+unalias findCSEC;
+unalias findNiteSec;
+unalias findBitRunners;
+unalias findBlackHand;
+unalias findWorldDaemon;
