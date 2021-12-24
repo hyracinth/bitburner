@@ -1,0 +1,43 @@
+======================================
+hackv3
+
+Method:
+	Very similar to hackv2 but the timing is different for the batches
+	
+	To be more efficient, the set should finish with h/w/g/w
+		Hack from max, weaken to lower security, grow back to max, then weaken to lower security again
+		Script should do something like the following:
+
+	W |---------------|
+	W   |---------------|
+	G    |-------------|
+	H        |-------|
+
+
+======================================
+hackv2
+
+Method:
+	Handle the h/g/w threads as a set
+	For every ONE hack thread, calculate number of grow threads and security threads, that are required to bring server back down to "perfect" state (min security / max money)
+	Delay the hack and grow threads start time to end at the same time as weaken threads.
+
+Issues
+	Ending the threads at the same time causes issues as the order the threads finish DO matter.
+		Want the hack to finish first, then grow, then weaken
+
+	SECURITY LEVEL IMPACTS THE TIME OPERATIONS TAKE
+		This likely affected the timing calculations and causes timing issues
+
+======================================
+hackv1
+
+Method:
+	Individual hack/grow/weak scripts
+		- this allows for better use of RAM on hosts as each script has minimum RAM requirement
+	Gets a list of all servers that has at least RAM to run at least one thread of the h/g/w scripts
+	One controller to distribute all hack threads, then grow, then weaken. 
+
+Issues:
+	Once the amount of threads reaches a certain point, it will be draining servers to $0 (and beyond), wasting a lot of threads when hacking.
+		Similar for the grow/weak threads

@@ -1,9 +1,0 @@
-Method:
-	Individual hack/grow/weak scripts
-		- this allows for better use of RAM on hosts as each script has minimum RAM requirement
-	Gets a list of all servers that has at least RAM to run at least one thread of the h/g/w scripts
-	One controller to distribute all hack threads, then grow, then weaken. 
-
-Issues:
-	Once the amount of threads reaches a certain point, it will be draining servers to $0 (and beyond), wasting a lot of threads when hacking.
-		Similar for the grow/weak threads

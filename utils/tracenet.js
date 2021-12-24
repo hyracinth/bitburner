@@ -14,12 +14,8 @@ export async function main(ns) {
 	let start = "home";
 	stack.push(start);
 
-	let counter = 0;
-	let failSafeIterations = 10000;
-
 	while (stack.length > 0) {
 		let currentServ = stack.pop();
-
 		if (!visited.includes(currentServ)) {
 			visited.push(currentServ);
 			let childServs = ns.scan(currentServ);
@@ -35,9 +31,6 @@ export async function main(ns) {
 				}
 			}
 		}
-		if (counter++ > failSafeIterations) {
-			break;
-		}
 	}
 
 	let path = [];
@@ -50,15 +43,17 @@ export async function main(ns) {
 				break;
 			}
 		}
+		if(iterator == target) {
+			ns.tprint("Target does not exist.");
+			return;
+		}
 	}
 
 	if (connectPath) {
 		let revPath = path.reverse();
-		let result = "connect ";
 		for(let ii = 0; ii < revPath.length; ii++) {
-			result += revPath[ii] + "; connect ";
+			ns.connect(revPath[ii]);
 		}
-		ns.tprint(result.substring(0, result.length - 9));
 	}
 	else {
 		ns.tprint(path.reverse());

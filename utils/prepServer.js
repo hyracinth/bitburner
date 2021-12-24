@@ -1,3 +1,5 @@
+import HBBConstants from "/lib/HBBConstants.js";
+
 /** @param {NS} ns **/
 export async function main(ns) {
 	if (ns.args.length < 2) {
@@ -7,11 +9,13 @@ export async function main(ns) {
 
 	let host = ns.args[0];
 	let target = ns.args[1];
-	let baseOp = "/common/baseOperations.js";
 
-	let baseOpRam = ns.getScriptRam(baseOp);
+	let baseOpRam = ns.getScriptRam(HBBConstants.SCRIPT_BASE_OPERATIONS);
 	let availRam = ns.getServerMaxRam(host) - ns.getServerUsedRam(host);
 	let weakAnalyze = ns.weakenAnalyze(1);
+
+	await ns.scp(HBBConstants.SCRIPT_BASE_OPERATIONS, "home", host);
+	await ns.scp(HBBConstants.SCRIPT_HBBCONSTANTS, "home", host);
 
 	// Grow money to maximum
 	let maxMoney = ns.getServerMaxMoney(target);
@@ -25,10 +29,11 @@ export async function main(ns) {
 	}
 	else {
 		ns.print(`Prepping to grow ${target} with ${host}.`);
+		let currMoney;
 		while (reqMoney != 1) {
 			let threadsToMaxMoney = Math.ceil(ns.growthAnalyze(target, reqMoney));
 			let threadsToUse = Math.min(threadsToMaxMoney, Math.floor(availRam / baseOpRam));
-			let pid = ns.exec(baseOp, host, threadsToUse, target, "GROW", 0);
+			let pid = ns.exec(HBBConstants.SCRIPT_BASE_OPERATIONS, host, threadsToUse, target, "GROW", 0);
 
 			let timeToSleep = ns.getGrowTime(target) + 100;
 			ns.print(`Growing ${target}: ${threadsToUse} / ${threadsToMaxMoney} threads. ETA: ${Math.round(timeToSleep / 1000)} secs`);
@@ -37,7 +42,7 @@ export async function main(ns) {
 				await ns.sleep(1000);
 			}
 
-			let currMoney = ns.getServerMoneyAvailable(target);
+			currMoney = ns.getServerMoneyAvailable(target);
 			reqMoney = maxMoney / currMoney;
 		}
 		ns.print(`${target} Current Money: ${currMoney / 1000000}M | Max Money: ${maxMoney / 1000000}M`);
@@ -54,7 +59,7 @@ export async function main(ns) {
 		while (currSec > minSec) {
 			let threadsToMinSec = Math.ceil((currSec - minSec) / weakAnalyze);
 			let threadsToUse = Math.min(threadsToMinSec, Math.floor(availRam / baseOpRam));
-			let pid = ns.exec(baseOp, host, threadsToUse, target, "WEAK", 0);
+			let pid = ns.exec(HBBConstants.SCRIPT_BASE_OPERATIONS, host, threadsToUse, target, "WEAK", 0);
 
 			let timeToSleep = ns.getWeakenTime(target) + 100;
 			ns.print(`Weakening ${target}: ${threadsToUse} / ${threadsToMinSec} threads. ETA: ${Math.round(timeToSleep / 1000)} secs`);

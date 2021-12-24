@@ -21,7 +21,8 @@ export async function main(ns) {
 
 	for (let ii = 0; ii < serverList.length; ii++) {
 		let serv = serverList[ii];
-		if (ns.getServerUsedRam(serv) == 0 && ns.getServerMaxRam(serv) >= 4) {
+		if (ns.getServerUsedRam(serv) == 0 && ns.getServerMaxRam(serv) >= 4 &&
+			ns.hasRootAccess(serv)) {
 			// Run all control scripts at home PC
 			ns.killall(serv);
 			ns.exec(HBBConstants.SCRIPT_HACKV1, homeServer, 1, serv, target);
