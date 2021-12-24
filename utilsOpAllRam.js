@@ -1,4 +1,4 @@
-import HBBConstants from "/lib/HBBConstants.js";
+import HBBConstants from "libHBBConstants.js";
 
 /** @param {NS} ns **/
 export async function main(ns) {

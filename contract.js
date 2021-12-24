@@ -1,4 +1,4 @@
-import { getServerList } from "/lib/utils.js";
+import { getServerList } from "libUtils.js";
 
 /** @param {NS} ns **/
 export async function main(ns) {
@@ -13,6 +13,10 @@ export async function main(ns) {
 		if (result.length > 0) {
 			contractList.push([currServer, result]);
 		}
+	}
+
+	if(contractList.length == 0){
+		ns.tprint("No contracts are available.");
 	}
 
 	for (let ii = 0; ii < contractList.length; ii++) {

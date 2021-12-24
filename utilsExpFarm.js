@@ -6,7 +6,7 @@ export async function main(ns) {
 	let target = (ns.args[1] == null) ? "joesguns" : ns.args[1];
 	let threads = ns.args[2];
 	let targetHackLvl = (ns.args[3] == null) ? 3000 : ns.args[3];
-	let baseOp = "/common/baseOperations.js";
+	let baseOp = "commonBaseOperations.js";
 
 	if (host != "home") {
 		await ns.scp(baseOp, "home", host);

@@ -1,5 +1,5 @@
-import HBBConstants from "/lib/HBBConstants.js";
-import { getServerList } from "/lib/utils.js";
+import HBBConstants from "libHBBConstants.js";
+import { getServerList } from "libUtils.js";
 
 /** @param {NS} ns **/
 export async function main(ns) {

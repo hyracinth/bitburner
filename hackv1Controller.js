@@ -1,5 +1,5 @@
-import { getServerList, getHackTarget } from "/lib/utils.js"
-import HBBConstants from "/lib/HBBConstants.js";
+import { getServerList, getHackTarget } from "libUtils.js"
+import HBBConstants from "libHBBConstants.js";
 
 /** @param {NS} ns **/
 export async function main(ns) {
@@ -17,7 +17,7 @@ export async function main(ns) {
 	target = (target == null) ? getHackTarget(ns, serverList) : target;
 
 	ns.tprint("Targetted Server: " + target);
-	ns.tprint("Server list: " + serverList);
+	ns.print("Server list: " + serverList);
 
 	for (let ii = 0; ii < serverList.length; ii++) {
 		let serv = serverList[ii];

@@ -1,4 +1,4 @@
-import { getServerList } from "/lib/utils.js"
+import { getServerList } from "libUtils.js"
 
 /** @param {NS} ns **/
 export async function main(ns) {
