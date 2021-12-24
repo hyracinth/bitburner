@@ -16,7 +16,7 @@ export async function main(ns) {
 		if (threads == null) {
 			let bufferRam = 0;
 			if(host == "home") {
-				bufferRam = 5;
+				bufferRam = 25;
 			}
 			threads = (ns.getServerMaxRam(host) - ns.getServerUsedRam(host) - bufferRam) / ns.getScriptRam(baseOp);
 		}

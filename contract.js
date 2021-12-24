@@ -34,11 +34,11 @@ export async function main(ns) {
 		for (let jj = 0; jj < contractList[ii][1].length; jj++) {
 			let currFile = contractList[ii][1][jj];
 			let contractType = ns.codingcontract.getContractType(currFile, currServer);
-			let data, answer, result, prettyText;
+			let data = ns.codingcontract.getData(currFile, currServer);
+			let answer, result, prettyText;
 
 			switch (contractType) {
 				case "Subarray with Maximum Sum":
-					data = ns.codingcontract.getData(currFile, currServer);
 					let sumMax = Number.NEGATIVE_INFINITY;
 					for (let ii = 0; ii < data.length; ii++) {
 						let rowSum = 0;
@@ -52,8 +52,37 @@ export async function main(ns) {
 					answer = sumMax;
 					break;
 
+				case "Merge Overlapping Intervals":
+					data = data.sort((a, b) => (a[0] > b[0] ? 1 : -1));
+					let ii = 0;
+					let finalCheck = true;
+					let dataChanged = false;
+					while (finalCheck) {
+						if (data.length == 1) {
+							break;
+						}
+						if (ii + 1 == data.length) {
+							if (dataChanged) {
+								ii = 0;
+								dataChanged = false;
+							}
+							else {
+								break;
+							}
+						}
+						if (data[ii + 1][0] >= data[ii][0] && data[ii + 1][0] <= data[ii][1]) {
+							data[ii][1] = Math.max(data[ii][1], data[ii + 1][1]);
+							data.splice(ii + 1, 1);
+							dataChanged = true;
+						}
+						else {
+							ii++;
+						}
+					}
+					answer = data;
+					break;
+
 				case "Minimum Path Sum in a Triangle":
-					data = ns.codingcontract.getData(currFile, currServer);
 					let row = data.length;
 
 					for (let ii = 0; ii < row; ii++) {
