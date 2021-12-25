@@ -14,9 +14,11 @@ export async function main(ns) {
 	let availRam = ns.getServerMaxRam(host) - ns.getServerUsedRam(host);
 	let weakAnalyze = ns.weakenAnalyze(1);
 
-	await ns.scp(HBBConstants.SCRIPT_BASE_OPERATIONS, "home", host);
-	await ns.scp(HBBConstants.SCRIPT_HBBCONSTANTS, "home", host);
-
+	if (host != "home") {
+		await ns.scp(HBBConstants.SCRIPT_BASE_OPERATIONS, "home", host);
+		await ns.scp(HBBConstants.SCRIPT_HBBCONSTANTS, "home", host);
+	}
+	
 	// Grow money to maximum
 	let maxMoney = ns.getServerMaxMoney(target);
 	let reqMoney = maxMoney / Math.max(1, ns.getServerMoneyAvailable(target));

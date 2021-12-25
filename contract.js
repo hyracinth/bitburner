@@ -15,7 +15,7 @@ export async function main(ns) {
 		}
 	}
 
-	if(contractList.length == 0){
+	if (contractList.length == 0) {
 		ns.tprint("No contracts are available.");
 	}
 
@@ -26,10 +26,6 @@ export async function main(ns) {
 			ns.tprint("========================================");
 			ns.tprint(`${currServer}: \t${contractList[ii][1][jj]}`);
 			ns.tprint(`Contract Type: ${ns.codingcontract.getContractType(currFile, currServer)}`);
-
-			// ns.tprint(`Data: ${ns.codingcontract.getData(currFile, currServer)}`);
-			// ns.tprint(`Description: ${ns.codingcontract.getDescription(currFile, currServer)}`);
-			// ns.tprint(`NumTries ${ns.codingcontract.getNumTriesRemaining(currFile, currServer)}`);
 		}
 	}
 
@@ -42,6 +38,35 @@ export async function main(ns) {
 			let answer, result, prettyText;
 
 			switch (contractType) {
+				case "Find Largest Prime Factor":
+					let maxPrime = 1;
+
+					while (data % 2 == 0) {
+						maxPrime = 2;
+						data /= 2;
+					}
+					while (data % 3 == 0) {
+						maxPrime = 3;
+						data /= 3;
+					}
+
+					for (let ii = 5; ii <= Math.sqrt(data); ii += 6) {
+						while (data % ii == 0) {
+							maxPrime = ii;
+							data = data / ii;
+						}
+						while (data % (ii + 2) == 0) {
+							maxPrime = ii + 2;
+							data = data / (ii + 2);
+						}
+					}
+
+					if (data > 4)
+						maxPrime = data;
+
+					answer = maxPrime;
+					break;
+
 				case "Subarray with Maximum Sum":
 					let sumMax = Number.NEGATIVE_INFINITY;
 					for (let ii = 0; ii < data.length; ii++) {
@@ -55,6 +80,42 @@ export async function main(ns) {
 					}
 					answer = sumMax;
 					break;
+
+				// case "Total Ways to Sum":
+				// 	for (let ii = data - 1; ii > 0; ii--) {
+				// 		let currSum = ii;
+				// 		let currComp = [ii];
+				// 		if (failSafe-- < 0) break;
+				// 		for (let jj = ii; jj > 0; jj--) {
+				// 			if (failSafe-- < 0) break;
+
+				// 			if (currSum + jj == data) {
+				// 				sumCount++;
+				// 				currSum += jj;
+				// 				currComp.push(jj);
+
+				// 				ns.tprint(`${sumCount}\t${currSum}\t${ii}\t${jj}\t${currComp} FOUND`);
+
+				// 				currSum = ii;
+				// 				currComp = [ii];
+
+				// 			}
+				// 			else if (currSum + jj < data) {
+				// 				ns.tprint(`HERE ${currSum} ${jj}`);
+				// 				currSum += jj;
+				// 				currComp.push(jj);
+				// 				jj = ii;
+				// 				ns.tprint(`${sumCount}\t${currSum}\t${ii}\t${jj}\t${currComp}`);
+				// 			}
+				// 			else {
+
+				// 				ns.tprint(`${sumCount}\t${currSum}\t${ii}\t${jj}\t${currComp}`);
+				// 			}
+				// 		}
+				// 	}
+
+				// 	ns.tprint(sumCount);
+				// 	break;
 
 				case "Merge Overlapping Intervals":
 					data = data.sort((a, b) => (a[0] > b[0] ? 1 : -1));

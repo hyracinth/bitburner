@@ -1,22 +1,24 @@
 /** @param {NS} ns **/
 export async function main(ns) {
+	ns.disableLog("sleep");
+
 	const crimeList = [
-		"shoplift",		//1
-		"rob store",	//2
-		"mug someone",	//3
-		"larceny",		//4
-		"deal drugs", 	//5
-		"bond forgery",	//6
+		"shoplift",		//0
+		"rob store",	//1
+		"mug someone",	//2
+		"larceny",		//3
+		"deal drugs", 	//4
+		"bond forgery",	//5
 		"traffick illegal arms",
-		"homicide",		//8
-		"grand theft auto",	//9
-		"kidnap and ransom",	//10
-		"assassinate",	//11
-		"heist"			//12
+		"homicide",		//7
+		"grand theft auto",	//8
+		"kidnap and ransom",	//9
+		"assassinate",	//10
+		"heist"			//11
 	];
 
 	while (true) {
-		const time = ns.commitCrime(crimeList[4])
+		const time = ns.commitCrime(crimeList[2])
 		await ns.sleep(time * 0.9);
 		if (!ns.isBusy()) {
 			break;
