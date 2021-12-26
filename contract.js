@@ -82,39 +82,50 @@ export async function main(ns) {
 					break;
 
 				case "Total Ways to Sum":
-					let failSafe = 1000;
-					data = 10;
-					//ns.tprint("===================");
-
+					// https://www.geeksforgeeks.org/generate-unique-partitions-of-an-integer/
 					let sumCount = 0;
-					for (let ii = data - 1; ii > 0; ii--) {
-						if (failSafe-- < 0) break;
-						let currSum = ii;
-						let currComp = [ii];
-						for (let jj = ii; jj > 0; jj--) {
-							if (failSafe-- < 0) break;
-							if (currSum + jj == data) {
-								sumCount++;
-								currSum += jj;
-								currComp.push(jj);
+					// array to store partition
+					let partition = [data];
+					// index of last element in partition
+					let prevInd = 0
+					// first partition is number itself
+					partition[prevInd] = data;
 
-								//ns.tprint(`${sumCount}\t${currSum}\t${ii}\t${jj}\t${currComp} FOUND`);
-								currSum = ii;
-								currComp = [ii];
-							}
-							else if (currSum + jj < data) {
-								currSum += jj;
-								currComp.push(jj);
-								jj++;
-								//ns.tprint(`${sumCount}\t${currSum}\t${ii}\t${jj}\t${currComp}`);
-							}
-							else {
-								//ns.tprint(`${sumCount}\t${currSum}\t${ii}\t${jj}\t${currComp}`);
-							}
+					while (true) {
+						sumCount++;
+						//ns.tprint(partition);
+
+						// find rightmost value that is NOT a one
+						let remVal = 0;
+						while (prevInd >= 0 && partition[prevInd] == 1) {
+							remVal += partition[prevInd];
+							prevInd--;
 						}
-					}
 
-					//ns.tprint(sumCount);
+						// if k < 0, all values are 1, so quit
+						if(prevInd < 0) {
+							break;
+						}
+
+						partition[prevInd]--;
+						remVal++;
+
+						// if remVal has increased, the no longer sorted.
+						// divide remVal in different values of size p[k] and copy positions after p[k]
+						while (remVal > partition[prevInd]) {
+							partition[prevInd+1] = partition[prevInd];
+							remVal = remVal - partition[prevInd];
+							prevInd++;
+						}
+
+						// copy remVal to next position and increase position
+						partition[prevInd+1] = remVal;
+						prevInd++;
+					}
+					// ns.tprint(data);
+					// ns.tprint(sumCount);
+
+					// answer = sumCount;
 					break;
 
 				case "Merge Overlapping Intervals":
