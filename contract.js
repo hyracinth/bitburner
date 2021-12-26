@@ -81,41 +81,41 @@ export async function main(ns) {
 					answer = sumMax;
 					break;
 
-				// case "Total Ways to Sum":
-				// 	for (let ii = data - 1; ii > 0; ii--) {
-				// 		let currSum = ii;
-				// 		let currComp = [ii];
-				// 		if (failSafe-- < 0) break;
-				// 		for (let jj = ii; jj > 0; jj--) {
-				// 			if (failSafe-- < 0) break;
+				case "Total Ways to Sum":
+					let failSafe = 1000;
+					data = 10;
+					//ns.tprint("===================");
 
-				// 			if (currSum + jj == data) {
-				// 				sumCount++;
-				// 				currSum += jj;
-				// 				currComp.push(jj);
+					let sumCount = 0;
+					for (let ii = data - 1; ii > 0; ii--) {
+						if (failSafe-- < 0) break;
+						let currSum = ii;
+						let currComp = [ii];
+						for (let jj = ii; jj > 0; jj--) {
+							if (failSafe-- < 0) break;
+							if (currSum + jj == data) {
+								sumCount++;
+								currSum += jj;
+								currComp.push(jj);
 
-				// 				ns.tprint(`${sumCount}\t${currSum}\t${ii}\t${jj}\t${currComp} FOUND`);
+								//ns.tprint(`${sumCount}\t${currSum}\t${ii}\t${jj}\t${currComp} FOUND`);
+								currSum = ii;
+								currComp = [ii];
+							}
+							else if (currSum + jj < data) {
+								currSum += jj;
+								currComp.push(jj);
+								jj++;
+								//ns.tprint(`${sumCount}\t${currSum}\t${ii}\t${jj}\t${currComp}`);
+							}
+							else {
+								//ns.tprint(`${sumCount}\t${currSum}\t${ii}\t${jj}\t${currComp}`);
+							}
+						}
+					}
 
-				// 				currSum = ii;
-				// 				currComp = [ii];
-
-				// 			}
-				// 			else if (currSum + jj < data) {
-				// 				ns.tprint(`HERE ${currSum} ${jj}`);
-				// 				currSum += jj;
-				// 				currComp.push(jj);
-				// 				jj = ii;
-				// 				ns.tprint(`${sumCount}\t${currSum}\t${ii}\t${jj}\t${currComp}`);
-				// 			}
-				// 			else {
-
-				// 				ns.tprint(`${sumCount}\t${currSum}\t${ii}\t${jj}\t${currComp}`);
-				// 			}
-				// 		}
-				// 	}
-
-				// 	ns.tprint(sumCount);
-				// 	break;
+					//ns.tprint(sumCount);
+					break;
 
 				case "Merge Overlapping Intervals":
 					data = data.sort((a, b) => (a[0] > b[0] ? 1 : -1));
@@ -150,17 +150,16 @@ export async function main(ns) {
 				case "Minimum Path Sum in a Triangle":
 					let row = data.length;
 
-					for (let ii = 0; ii < row; ii++) {
+					for (let ii = 1; ii < row; ii++) {
 						for (let jj = 0; jj < data[ii].length; jj++) {
-							let adjCells = [];
-							if (ii - 1 >= 0 && jj < data[ii - 1].length) {
-								adjCells.push(data[ii - 1][jj]);
+							if (jj == 0) {
+								data[ii][jj] += data[ii - 1][jj];
 							}
-							if (jj - 1 >= 0) {
-								adjCells.push(data[ii][jj - 1]);
+							else if (jj == ii) {
+								data[ii][jj] += data[ii - 1][jj - 1];
 							}
-							if (adjCells.length > 0) {
-								data[ii][jj] += Math.min(...adjCells);
+							else {
+								data[ii][jj] += Math.min(data[ii - 1][jj - 1], data[ii - 1][jj]);
 							}
 						}
 					}
@@ -169,10 +168,17 @@ export async function main(ns) {
 			}
 			if (answer != null) {
 				result = ns.codingcontract.attempt(answer, currFile, currServer, { returnReward: true });
-				prettyText = `${currFile} @ ${currServer}: ${result}`;
-				ns.print(prettyText);
-				ns.tprint(prettyText);
-				ns.toast(prettyText);
+
+				if (result != null)
+					prettyText = `${currFile} @ ${currServer}: ${result}`;
+				else
+					prettyText = `${currFile} @ ${currServer} WRONG! WRONG! WRONG!`
+
+				if (result != null) {
+					ns.print(prettyText);
+					ns.tprint(prettyText);
+					ns.toast(prettyText);
+				}
 			}
 		}
 	}
