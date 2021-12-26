@@ -1,6 +1,6 @@
 /** @param {NS} ns **/
 export async function main(ns) {
-	ns.exec("custom.js", "home", 1);
+	ns.exec("customStats.js", "home", 1);
 	let pid = ns.exec("hackv3EarlyStartup.js", "home", 1, "foodnstuff");
 	while(ns.isRunning(pid)) {
 		await ns.sleep(500);
@@ -9,5 +9,5 @@ export async function main(ns) {
 		while(ns.isRunning(pid)) {
 		await ns.sleep(500);
 	}
-	ns.exec("utilsExpFarm.js", "home", 1);
+	//ns.exec("utilsExpFarm.js", "home", 1);
 }
