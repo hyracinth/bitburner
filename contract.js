@@ -103,7 +103,7 @@ export async function main(ns) {
 						}
 
 						// if k < 0, all values are 1, so quit
-						if(prevInd < 0) {
+						if (prevInd < 0) {
 							break;
 						}
 
@@ -113,13 +113,13 @@ export async function main(ns) {
 						// if remVal has increased, the no longer sorted.
 						// divide remVal in different values of size p[k] and copy positions after p[k]
 						while (remVal > partition[prevInd]) {
-							partition[prevInd+1] = partition[prevInd];
+							partition[prevInd + 1] = partition[prevInd];
 							remVal = remVal - partition[prevInd];
 							prevInd++;
 						}
 
 						// copy remVal to next position and increase position
-						partition[prevInd+1] = remVal;
+						partition[prevInd + 1] = remVal;
 						prevInd++;
 					}
 					// ns.tprint(data);
@@ -127,6 +127,26 @@ export async function main(ns) {
 
 					// answer = sumCount;
 					break;
+
+				case "Array Jumping Game":
+					let targetInd = data.length;
+					let currInd = 0;
+					let canHop = 1;
+
+					for (let ii = 0; ii < targetInd; ii++) {
+						if (data[ii] == 0 && currInd != targetInd) {
+							canHop = 0;
+							break;
+						}
+						else {
+							currInd += data[ii];
+						}
+					}
+					ns.tprint(canHop);
+					ns.tprint(data);
+					answer = canHop;
+					break;
+
 
 				case "Merge Overlapping Intervals":
 					data = data.sort((a, b) => (a[0] > b[0] ? 1 : -1));
