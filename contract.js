@@ -134,7 +134,10 @@ export async function main(ns) {
 					let canHop = 1;
 
 					for (let ii = 0; ii < targetInd; ii++) {
-						if (data[ii] == 0 && currInd != targetInd) {
+						if(currInd == targetInd) {
+							break;
+						}
+						else if (data[ii] == 0 && currInd != targetInd) {
 							canHop = 0;
 							break;
 						}
